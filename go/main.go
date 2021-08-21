@@ -24,6 +24,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
+	"github.com/newrelic/go-agent/v3/integrations/nrecho-v4"
+	"github.com/newrelic/go-agent/v3/newrelic"
 )
 
 const (
@@ -208,18 +210,18 @@ func init() {
 
 func main() {
 	var err error
-	//app, err := newrelic.NewApplication(
-	//	newrelic.ConfigAppName("isucondition"),
-	//	newrelic.ConfigFromEnvironment(),
-	//	newrelic.ConfigDistributedTracerEnabled(true),
-	//	newrelic.ConfigDebugLogger(os.Stdout),
-	//)
+	app, err := newrelic.NewApplication(
+		newrelic.ConfigAppName("isucondition"),
+		newrelic.ConfigFromEnvironment(),
+		newrelic.ConfigDistributedTracerEnabled(true),
+		newrelic.ConfigDebugLogger(os.Stdout),
+	)
 
 	e := echo.New()
 	e.Debug = true
 	e.Logger.SetLevel(log.DEBUG)
 
-	//e.Use(nrecho.Middleware(app))
+	e.Use(nrecho.Middleware(app))
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
