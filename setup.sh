@@ -6,6 +6,9 @@ echo "Build go file"
 export PATH=/home/isucon/local/go/bin:/home/isucon/go/bin:$PATH
 go build
 
+echo "Restart go server"
+systemctl restart isucondition.go
+
 cd ..
 
 if [[ $(hostname) = *"11" ]]; then
