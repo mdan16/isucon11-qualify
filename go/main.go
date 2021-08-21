@@ -209,6 +209,7 @@ func init() {
 }
 
 func main() {
+	var err error
 	app, err := newrelic.NewApplication(
 		newrelic.ConfigAppName("isucondition"),
 		newrelic.ConfigFromEnvironment(),
@@ -248,7 +249,7 @@ func main() {
 
 	mySQLConnectionData = NewMySQLConnectionEnv()
 
-	db, err := mySQLConnectionData.ConnectDB()
+	db, err = mySQLConnectionData.ConnectDB()
 	if err != nil {
 		e.Logger.Fatalf("failed to connect db: %v", err)
 		return
